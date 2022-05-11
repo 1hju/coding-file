@@ -1,0 +1,566 @@
+{\rtf1\ansi\ansicpg1252\deff0\nouicompat\deflang1033{\fonttbl{\f0\froman\fcharset0 Times New Roman;}{\f1\fswiss\fcharset0 Calibri;}{\f2\fnil\fcharset0 Calibri;}{\f3\fswiss\fcharset0 Times New Roman;}{\f4\fnil\fcharset0 Times New Roman;}}
+{\colortbl ;\red0\green0\blue0;}
+{\*\generator Riched20 10.0.19041}\viewkind4\uc1\trowd\trgaph108\trleft-108\trrh124\trpaddl108\trpaddr108\trpaddfl3\trpaddfr3
+\cellx6610 
+\pard\intbl\cf1\b\f0\fs28\lang9 *SYSTEM CONFIGURATION USING SHELL SCRIPT \b0\cell\row 
+\pard\fs32 C:\\Users\\student>cd.. \par
+C:\\Users>cd.. \par
+C:\\> \par
+C:\\>whoami \par
+C:\\>dir \par
+C:\\>path \par
+C:\\>cd C:\\Users\\Administrator \par
+C:\\ Users\\Administrator>hostname \par
+
+\pard\sa200\sl276\slmult1 C:\\ Users\\Administrator>systeminfo \par
+\par
+\trowd\trgaph108\trleft-108\trrh124\trpaddl108\trpaddr108\trpaddfl3\trpaddfr3
+\cellx5041 
+\pard\intbl\b\fs28 *IMPLEMENT THE FILTER COMMAND \b0\cell\row 
+\pard\fs32 C:\\Users\\student>cd.. \par
+C:\\Users>cd.. \par
+C:\\> \par
+C:\\>D: \par
+D:\\>cd D:\\lV \par
+
+\pard\sa200\sl276\slmult1 D:\\IV>dir bonafide.docx /s/p \par
+\par
+\trowd\trgaph108\trleft-108\trrh124\trpaddl108\trpaddr108\trpaddfl3\trpaddfr3
+\cellx7320 
+\pard\intbl\b\fs28 *READ, ADD, REMOVE & MODIFY A RECORD IN TABLE \b0\cell\row 
+\pard create table employee1(eid varchar(20) primary key,name1 char(30),age number(3)); \par
+desc employee1; \par
+insert into employee1 values('1','RR',28); \par
+insert into employee1 values('&eid','&name1',&age); \par
+select * from employee1; \par
+select eid from employee1; \par
+select * from employee1 where eid='&eid'; \par
+select name1 from employee1 where eid='&eid'; \par
+delete from employee1 where eid='&eid'; \par
+
+\pard\sa200\sl276\slmult1 delete from employee1; \par
+\trowd\trgaph108\trleft-108\trrh124\trpaddl108\trpaddr108\trpaddfl3\trpaddfr3
+\cellx8242 
+\pard\intbl\b INTERFACE TO CREATE A DATABASE & INSERT TABLE INIT \b0\cell\row 
+\pard\b DATABASE CREATION \b0\par
+<?php \par
+$link = mysqli_connect("localhost", "root", ""); \par
+if($link === false)\{ \par
+die("ERROR: Could not connect. " . mysqli_connect_error()); \par
+\} \par
+$sql = "CREATE DATABASE DBNAME"; \par
+if(mysqli_query($link, $sql))\{ \par
+echo "Database created successfully"; \par
+\} else\{ \par
+echo "ERROR: Could not able to execute $sql. " . mysqli_error($link); \par
+\} \par
+mysqli_close($link); \par
+?> \par
+\par
+\par
+\b *TABLE CREATION USING PHP MYSQL \b0\par
+<?php \par
+$link = mysqli_connect("localhost", "root", "", "DBNAME"); \par
+// Check connection \par
+if($link === false)\{ \par
+die("ERROR: Could not connect. " . mysqli_connect_error()); \par
+\} \par
+// Attempt create table query execution \par
+$sql = "CREATE TABLE persons( \par
+id INT NOT NULL PRIMARY KEY AUTO_INCREMENT, \par
+first_name VARCHAR(30) NOT NULL, \par
+last_name VARCHAR(30) NOT NULL, \par
+email VARCHAR(70) NOT NULL UNIQUE \par
+)"; \par
+if(mysqli_query($link, $sql))\{ \par
+echo "Table created successfully."; \par
+\} else\{ \par
+echo "ERROR: Could not able to execute $sql. " . mysqli_error($link); \par
+\} \par
+// Close connection \par
+mysqli_close($link); \par
+
+\pard\sa200\sl276\slmult1 ?> \par
+\par
+\trowd\trgaph108\trleft-108\trrh124\trpaddl108\trpaddr108\trpaddfl3\trpaddfr3
+\cellx4619 
+\pard\intbl\b *USING CLASSES CREATE A TABLE \b0\cell\row 
+\pard <?php \par
+$link = mysqli_connect("localhost", "root", "", "demo"); \par
+// Check connection \par
+if($link === false)\{ \par
+die("ERROR: Could not connect. " . mysqli_connect_error()); \par
+\} \par
+// Attempt create table query execution \par
+$sql = "CREATE TABLE persons( \par
+id INT NOT NULL PRIMARY KEY AUTO_INCREMENT, \par
+first_name VARCHAR(30) NOT NULL, \par
+last_name VARCHAR(30) NOT NULL, \par
+email VARCHAR(70) NOT NULL UNIQUE \par
+)"; \par
+if(mysqli_query($link, $sql))\{ \par
+echo "Table created successfully."; \par
+\} else\{ \par
+echo "ERROR: Could not able to execute $sql. " . mysqli_error($link); \par
+\} \par
+// Close connection \par
+mysqli_close($link); \par
+
+\pard\sa200\sl276\slmult1 ?> \par
+\par
+\trowd\trgaph108\trleft-108\trrh124\trpaddl108\trpaddr108\trpaddfl3\trpaddfr3
+\cellx4023 
+\pard\intbl\b *UPLOAD A FILE TO A SERVER \b0\cell\row 
+\pard <html> \par
+<head> \par
+<title>Simple File Upload Script in PHP</title> \par
+<link href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet"> \par
+</head> \par
+<body> \par
+<div class="container"> \par
+<?php \par
+if (is_uploaded_file($_FILES['attachment']['tmp_name'])) \{ \par
+$newname = dirname(__FILE__) . '/' .basename($_FILES['attachment']['name']); \par
+if($_FILES['attachment']['size'] > 2097152) \{ \par
+$errors[]='File size must be excately 2 MB'; \par
+\} \par
+$file_ext=strtolower(end(explode('.',$_FILES['attachment']['name']))); \par
+$extensions= array("pdf","doc","docx"); \par
+if(in_array($file_ext,$extensions)=== false)\{ \par
+$errors[]="File extension not allowed, please choose a PDF, DOC, DOCX file."; \par
+\} \par
+if(empty($errors)==true)\{ \par
+if (!(move_uploaded_file($_FILES['attachment']['tmp_name'], $newname))) \{ \par
+echo "<p>ERROR: A problem occurred during file upload!</p>\\n"; \par
+\} else \{ \par
+echo "<p>The file has been saved as: \{$newname\}</p>\\n"; \par
+\} \par
+\} \par
+else\{ \par
+print_r($errors); \par
+\} \par
+\} \par
+?> \par
+<form action="<?php echo $_SERVER['PHP_SELF'] ?>" method="post" \f1\fs22 Page 32 \par
+\cf0\f0\fs24\par
+
+\pard\pagebb\fs28 enctype="multipart/form-data"> \par
+
+\pard <div class="form-group"> \par
+<label class="col-md-3 control-label">Upload a file (PDF, DOC, DOCX)</label> \par
+<div class="col-md-6"> \par
+<input type="file" name="attachment" class="form-control-file" /> \par
+</div> \par
+</div> \par
+<div class="form-group"> \par
+<div class="col-md-9 col-md-offset-3"> \par
+<button type="submit" class="btn btn-primary">Submit</button> \par
+</div> \par
+</div> \par
+</form> \par
+</div> \par
+</body> \par
+
+\pard\sa200\sl276\slmult1 </html> \par
+\par
+\trowd\trgaph108\trleft-108\trrh124\trpaddl108\trpaddr108\trpaddfl3\trpaddfr3
+\cellx5847 
+\pard\intbl\cf1\b *ACCESS A DATA STORED IN MYSQL TABLE \b0\cell\row 
+\pard\b Config.php \b0\par
+<?php \par
+$servername = "localhost"; \par
+$username = "root"; \par
+$password = ""; \par
+$dbname = "mydb"; \par
+$conn = new mysqli($servername, $username, $password, $dbname); \par
+if ($conn->connect_error) \{ \par
+die("Connection failed: " . $conn->connect_error); \par
+\} \par
+?> \par
+\b Create.php \b0\par
+<?php \par
+include "config.php"; \par
+if (isset($_POST['submit'])) \{ \par
+$first_name = $_POST['firstname']; \par
+$last_name = $_POST['lastname']; \par
+$email = $_POST['email']; \par
+$password = $_POST['password']; \par
+$gender = $_POST['gender']; \par
+$sql = "INSERT INTO `users`(`firstname`, `lastname`, `email`, `password`, `gender`) VALUES ('$first_name','$last_name','$email','$password','$gender')"; \par
+$result = $conn->query($sql); \par
+if ($result == TRUE) \{ \par
+echo "New record created successfully."; \par
+\}else\{ \par
+echo "Error:". $sql . "<br>". $conn->error; \par
+\} \par
+$conn->close(); \par
+\} \par
+?> \par
+<!DOCTYPE html> \par
+<html> \par
+<body> \par
+<h2>Signup Form</h2> \f1\fs22 Page 40 \par
+\cf0\f0\fs24\par
+
+\pard\pagebb\fs28 <form action="" method="POST"> \par
+
+\pard <fieldset> \par
+<legend>Personal information:</legend> \par
+First name:<br> \par
+<input type="text" name="firstname"> \par
+<br> \par
+Last name:<br> \par
+<input type="text" name="lastname"> \par
+<br> \par
+Email:<br> \par
+<input type="email" name="email"> \par
+<br> \par
+Password:<br> \par
+<input type="password" name="password"> \par
+<br> \par
+Gender:<br> \par
+<input type="radio" name="gender" value="Male">Male \par
+<input type="radio" name="gender" value="Female">Female \par
+<br><br> \par
+<input type="submit" name="submit" value="submit"> \par
+</fieldset> \par
+</form> \par
+</body> \par
+</html> \par
+\b read.php \b0\par
+<?php \par
+include "config.php"; \par
+$sql = "SELECT * FROM users"; \par
+$result = $conn->query($sql); \par
+?> \par
+<!DOCTYPE html> \par
+<html> \par
+<head> \par
+<title>View Page</title> \par
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css"> \par
+</head> \f1\fs22 Page 41 \par
+\f0\fs24\par
+
+\pard\pagebb\fs28 <body> \par
+
+\pard <div class="container"> \par
+<h2>users</h2> \par
+<table class="table"> \par
+<thead> \par
+<tr> \par
+<th>ID</th> \par
+<th>First Name</th> \par
+<th>Last Name</th> \par
+<th>Email</th> \par
+<th>Gender</th> \par
+<th>Action</th> \par
+</tr> \par
+</thead> \par
+<tbody> \par
+<?php \par
+if ($result->num_rows > 0) \{ \par
+while ($row = $result->fetch_assoc()) \{ \par
+?> \par
+<tr> \par
+<td><?php echo $row['id']; ?></td> \par
+<td><?php echo $row['firstname']; ?></td> \par
+<td><?php echo $row['lastname']; ?></td> \par
+<td><?php echo $row['email']; ?></td> \par
+<td><?php echo $row['gender']; ?></td> \par
+<td><a class="btn btn-info" href="update.php?id=<?php echo $row['id']; ?>">Edit</a>&nbsp;<a class="btn btn-danger" href="delete.php?id=<?php echo $row['id']; ?>">Delete</a></td> \par
+</tr> \par
+<?php \} \par
+\} \par
+?> \par
+</tbody> \par
+</table> \par
+</div> \par
+</body> \par
+
+\pard\sa200\sl276\slmult1 </html> \par
+\par
+\trowd\trgaph108\trleft-108\trrh124\trpaddl108\trpaddr108\trpaddfl3\trpaddfr3
+\cellx7575 
+\pard\intbl\cf1\b *CREATE AND READ CONTENTS FROM THE DIRECTORY \b0\cell\row 
+\pard\sa200\sl276\slmult1\cf0\f2\fs22\par
+
+\pard\cf1\f0\fs28 <?php \par
+//Thedirectorypath \par
+$dir= "testdirectory"; \par
+//Checktheexistenceofdirectory \par
+if(!file_exists($dir))\{ \par
+// Attempt to create directory \par
+if(mkdir($dir)) \par
+\{ \par
+echo "Directorycreatedsuccessfully."; \par
+\} \par
+else \par
+\{ \par
+echo "ERROR:Directorycouldnotbecreated."; \par
+\} \par
+\} \par
+else\{ \par
+echo"ERROR:Directoryalreadyexists."; \par
+\} \par
+?> \par
+\b II) \b0\par
+<?php \par
+$dir="testdirectory"; \par
+//Openadirectory,andreaditscontents \par
+if(is_dir($dir)) \par
+\{ \par
+if($dh=opendir($dir)) \par
+\{ \par
+while(($file=readdir($dh))!==false) \par
+\{ \par
+echo"filename:".$file."<br>"; \par
+\} \par
+closedir($dh); \par
+\} \par
+\} \par
+
+\pard\sa200\sl276\slmult1 ?> \par
+\par
+\cf0\b\f3 *RESULTS OF A STUDENT FROM A HTML FROM\par
+
+\pard\b0 <!DOCTYPEhtml>\par
+<htmllang="en">\par
+<head>\par
+<metacharset="UTF-8">\par
+<metahttp-equiv="X-UA-Compatible" content="IE=edge">\par
+<metaname="viewport"content="width=device-width,initial-scale=1.0">\par
+<title>Document</title>\par
+<linkhref="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"rel="\par
+stylesheet" integrity="sha384-\par
+1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3"cros\par
+sorigin="anonymous">\par
+</head>\par
+<body>\par
+<formaction=""method="post">\par
+<labelfor="fname">Firstname:</label>\par
+<inputtype="text"id="name"name="name"><br><br>\par
+<labelfor="mark">Mark:</label>\par
+<inputtype="text"id="mark"name="mark"><br><br>\par
+<labelfor="grade">Grade:</label>\par
+<inputtype="text"id="grade"name="grade"><br><br>\par
+<inputtype="submit"name="submit"value="submit">\par
+</form>\par
+</body>\par
+</html>\par
+<?php\par
+//Create Connection\par
+\f4 $conn=mysqli_connect("localhost","root","",\ldblquote test");\par
+\f3 //checkconnection\par
+if(!$conn)\{\par
+\f1\fs22 Page 57\par
+\f3\fs28 die("Connectionfailed:".mysqli_connect_error());\par
+\}\par
+if(isset($_POST['submit']))\{\par
+$name=$_POST['name'];\par
+$mark=$_POST['mark'];\par
+$grade=$_POST['grade'];\par
+$sql="INSERTINTOdetails(name,marks,grade)\par
+values('$name','$mark','$grade')";echo$sql;\par
+$result=mysqli_query($conn,$sql);\par
+if($result)\{\par
+echo'inserted seccessfully';\par
+\}else\{\par
+echo'error';\par
+\}\par
+\}\par
+/--FETCHINGDATAFROMTABLE--/\par
+$sql="SELECT*FROMdetails";\par
+$result=mysqli_query($conn,$sql);\par
+if($result->num_rows>0)\{\par
+//outputdataofeachrow\par
+while($row=$result->fetch_array())\{\par
+echo'<table class="table">\par
+<thead>\par
+<tr>\par
+<thscope="col">Id</th>\par
+<thscope="col">Name</th>\par
+<thscope="col">Marks</th>\par
+<thscope="col">Grade</th>\par
+</tr>\par
+</thead>\par
+<tbody>\par
+<tr>\par
+\f1\fs22 Page 58\par
+\f3\fs28 <td>'.$row["id"].'</td>\par
+<td>'.$row["name"].'</td>\par
+<td>'.$row["marks"].'</td>\par
+<td>'.$row["grade"].'</td>\par
+</tr>\par
+</tbody>\par
+</table>';\par
+\}\par
+\}else\{\par
+echo"0results";\par
+\}\par
+$conn->close();\par
+?>\par
+
+\pard\sa200\sl276\slmult1\f2\fs22\par
+\par
+\par
+\b\f3\fs28 *PRODUCTS FROM A WEBPAGE TO A SHOPPING CART\par
+
+\pard\b0 //add new key=>value to the HTML5 storage\par
+function SaveItem() \{\par
+var name = document.forms.ShoppingList.name.value;\par
+var data = document.forms.ShoppingList.data.value;\par
+localStorage.setItem(name, data);\par
+doShowAll();\par
+\}\par
+//------------------------------------------------------------------------------\par
+//change an existing key=>value in the HTML5 storage\par
+function ModifyItem() \{\par
+var name1 = document.forms.ShoppingList.name.value;\par
+var data1 = document.forms.ShoppingList.data.value;\par
+//check if name1 is already exists\par
+//check if key exists\par
+if (localStorage.getItem(name1) !=null)\par
+\{\par
+//update\par
+localStorage.setItem(name1,data1);\par
+document.forms.ShoppingList.data.value = localStorage.getItem(name1);\par
+\}\par
+doShowAll();\par
+\}\par
+//-------------------------------------------------------------------------\par
+//delete an existing key=>value from the HTML5 storage\par
+function RemoveItem() \{\par
+var name = document.forms.ShoppingList.name.value;\par
+document.forms.ShoppingList.data.value = localStorage.removeItem(name);\par
+doShowAll();\par
+\}\par
+//-------------------------------------------------------------------------------------\par
+//restart the local storage\par
+function ClearAll() \{\par
+\f1\fs22 Page 62\par
+\f3\fs28 localStorage.clear();\par
+doShowAll();\par
+\}\par
+//--------------------------------------------------------------------------------------\par
+// dynamically populate the table with shopping list items\par
+//below step can be done via PHP and AJAX too.\par
+function doShowAll() \{\par
+if (CheckBrowser()) \{\par
+var key = "";\par
+var list = "<tr><th>Item</th><th>Value</th></tr>\\n";\par
+var i = 0;\par
+//for more advance feature, you can set cap on max items in the cart\par
+for (i = 0; i <= localStorage.length-1; i++) \{\par
+key = localStorage.key(i);\par
+list += "<tr><td>" + key + "</td>\\n<td>"\par
++ localStorage.getItem(key) + "</td></tr>\\n";\par
+\}\par
+//if no item exists in the cart\par
+if (list == "<tr><th>Item</th><th>Value</th></tr>\\n") \{\par
+list += "<tr><td><i>empty</i></td>\\n<td><i>empty</i></td></tr>\\n";\par
+\}\par
+//bind the data to html table\par
+//you can use jQuery too....\par
+document.getElementById('list').innerHTML = list;\par
+\} else \{\par
+alert('Cannot save shopping list as your browser does not support HTML 5');\par
+\}\par
+\}\par
+/*\par
+=====> Checking the browser support\par
+//this step may not be required as most of modern browsers do support HTML5\par
+*/\par
+//below function may be redundant\par
+function CheckBrowser() \{\par
+if ('localStorage' in window && window['localStorage'] !== null) \{\par
+// we can use localStorage object to store data\par
+return true;\par
+\} else \{\par
+\f1\fs22 Page 63\par
+\f3\fs28 return false;\par
+\}\par
+\}\par
+//-------------------------------------------------\par
+/*\par
+You can extend this script by inserting data to database or adding payment processing\par
+API to shopping cart..\par
+*/\par
+td,th \{\par
+font-family: monospace;\par
+padding: 4px;\par
+background-color: #ccc;\par
+\}\par
+label \{\par
+vertical-align: top;\par
+\}\par
+#main \{\par
+border: 1px dotted blue;\par
+padding: 6px;\par
+background-color: #ccc;\par
+margin-right: 50%;\par
+\}\par
+#items_table \{\par
+border: 1px dotted blue;\par
+padding: 6px;\par
+margin-top: 12px;\par
+margin-right: 50%;\par
+\}\par
+#items_table h3 \{\par
+\f1\fs22 Page 64\par
+\f3\fs28 font-size: 18px;\par
+margin-top: 0px;\par
+font-family: sans-serif;\par
+\}\par
+<!DOCTYPE HTML>\par
+<html lang="en-US">\par
+<head>\par
+<title>HTML5 Local Storage Project</title>\par
+<META charset="UTF-8">\par
+<META name="viewport" content="width=device-width, initial-scale=1, shrink-tofit=\par
+no">\par
+<META NAME='rating' CONTENT='General' />\par
+<META NAME='expires' CONTENT='never' />\par
+<META NAME='language' CONTENT='English, EN' />\par
+<META name="description" content="shopping cart project with HTML5 and\par
+JavaScript">\par
+<META name="keywords" content="HTML5,CSS,JavaScript, html5 session storage,\par
+html5 local storage">\par
+<META name="author" content="dcwebmakers.com">\par
+<script src="Storage.js"></script>\par
+<link rel="stylesheet" href="StorageStyle.css">\par
+</head>\par
+<body onload="doShowAll()">\par
+<h2>Shopping Cart with HTML5 Storage Project</h2>\par
+<p>Insert items and quantity for your shopping cart. </p>\par
+<form name=ShoppingList>\par
+<div id="main">\par
+<table>\par
+<tr>\par
+<td><b>Item:</b><input type=text name=name></td>\par
+<td><b>Quantity:</b><input type=text name=data></td>\par
+\f1\fs22 Page 65\par
+\f3\fs28 </tr>\par
+<tr>\par
+<td>\par
+<input type=button value="Save" onclick="SaveItem()">\par
+<input type=button value="Update" onclick="ModifyItem()">\par
+<input type=button value="Delete" onclick="RemoveItem()">\par
+</td>\par
+</tr>\par
+</table>\par
+</div>\par
+<div id="items_table">\par
+<h3>Shopping List</h3>\par
+<table id=list></table>\par
+<p>\par
+<label><input type=button value="Clear" onclick="ClearAll()">\par
+<i>* Delete all items</i></label>\par
+</p>\par
+</div>\par
+</form>\par
+</body>\par
+</html>\par
+
+\pard\sa200\sl276\slmult1\f2\fs22\par
+}
+ 
